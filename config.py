@@ -8,3 +8,9 @@ class KafkaConfig:
     SASL_PLAIN_PASSWORD = "eUIpgWu0PWTJaTrjhjQD3.hoyhntiK"
     BOOTSTRAP_SERVERS = "rc1a-b5e65f36lm3an1d5.mdb.yandexcloud.net:9091"
     GROUP_ID = "stackoverfollowers"
+
+
+class MongoConfig:
+    CONNECTION_STRING = "mongodb://localhost:27017"
+    DB_NAME = "main_db"
+    COLLECTION_NAME = "data_col"

@@ -1,7 +1,10 @@
+import json
+
 from aiokafka import AIOKafkaConsumer
 from aiokafka.helpers import create_ssl_context
 
 from config import KafkaConfig
+from db.db import write_in_base
 
 
 async def consume_forever():
@@ -18,19 +21,12 @@ async def consume_forever():
         request_timeout_ms=1000,
     )
     await consumer.start()
-    print("Cool, weare connected!")
+    print("Cool, we\'are connected!")
     try:
-        # Consume messages
-        print(1)
         async for msg in consumer:
-            print(
-                "consumed: ",
-                msg.topic,
-                msg.partition,
-                msg.offset,
-                msg.key,
-                msg.value,
-                msg.timestamp,
-            )
+            msg_dict = msg.__dict__
+            msg_dict["value"] = json.loads(msg_dict["value"].decode("utf-8"))
+            result_id = await write_in_base(data=msg_dict)
+            print(f"{result_id=}")
     finally:
         await consumer.stop()
