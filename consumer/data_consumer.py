@@ -20,6 +20,7 @@ async def consume_forever():
         group_id=KafkaConfig.GROUP_ID,
         request_timeout_ms=1000,
     )
+
     await consumer.start()
     print("Cool, we\'are connected!")
     try:
