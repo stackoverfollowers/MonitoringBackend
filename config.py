@@ -1,0 +1,10 @@
+class KafkaConfig:
+    CONTEXT_FILE = "CA.perm"
+    TOPIC = "zsmk-9433-dev-01"
+    CLIENT_ID = "9433_reader"
+    SECURITY_PROTOCOL = "SASL_SSL"
+    SASL_MECHANISM = "SCRAM-SHA-512"
+    SASL_PLAIN_USERNAME = "9433_reader"
+    SASL_PLAIN_PASSWORD = "eUIpgWu0PWTJaTrjhjQD3.hoyhntiK"
+    BOOTSTRAP_SERVERS = "rc1a-b5e65f36lm3an1d5.mdb.yandexcloud.net:9091"
+    GROUP_ID = "stackoverfollowers"
