@@ -27,9 +27,8 @@ async def general_page():
         current_bearings = []
         # TODO)_))!#)(!)(_@*&*Z@^(@#^(#@(78
         for j in range(len(exhauster_bearings[i].bearings)):
-            print(exhauster_bearings[i].bearings[j])
             new_bearing = BearingResponse(
-                index=j,
+                index=exhauster_bearings[i].bearings[j].index,
                 is_temp_warning=(
                     exhauster_bearings[i].bearings[j].temps.temp is None
                     or exhauster_bearings[i].bearings[j].temps.setting_temp.warning_min
@@ -166,7 +165,7 @@ async def general_page():
             Exhauster(
                 title=exhauster_bearings[i].exhauster_name,
                 is_work=works_mapped[i].work,
-                rotor_title="todo",  # todo
+                rotor_title="no data?",  # todo
                 date_last_change=datetime.datetime.now(),  # todo
                 days_last_change=1,  # todo
                 days_forecast=1,  # todo

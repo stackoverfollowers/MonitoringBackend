@@ -30,7 +30,7 @@ async def get_exhauster(index: int):
 
     bearings = [
         BearingExhausterResponse(
-            index=i,
+            index=bearing.index,
             temperature=bearing.temps.temp,
             axial_vibration=bearing.vibration.axial_vibration
             if bearing.vibration is not None
@@ -42,7 +42,7 @@ async def get_exhauster(index: int):
             if bearing.vibration is not None
             else None,
         )
-        for i, bearing in enumerate(bearings_data.bearings)
+        for bearing in bearings_data.bearings
     ]
     return ExhausterInfoResponse(
         bearings=bearings,
