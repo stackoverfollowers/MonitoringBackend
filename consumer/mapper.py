@@ -21,6 +21,7 @@ class ExMapper:
         self.data = exhauster_data
         self.ex_prefix = "SM_Exgauster\\"
         self.bearing_prefix = 3
+        self.moment = datetime.fromisoformat(self.data.pop("moment"))
 
     def _bearings_iter(self) -> Iterator[tuple[int, int, float]]:
         for key, value in self.data.items():
@@ -61,8 +62,6 @@ class ExMapper:
         vertical_vibration_warning_mins = list(range(220, 229 + 1, 3))
 
         bearings = []
-        moment = datetime.fromisoformat(self.data.pop("moment"))
-        print(f"{moment=}")
 
         # сначала созадем просто все подшипники потом туда суем дату
         for first_key, second_key, value in self._bearings_iter():

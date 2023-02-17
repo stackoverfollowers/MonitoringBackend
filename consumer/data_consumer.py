@@ -47,3 +47,4 @@ async def consume_forever():
                 print(f"{result_id=}")
         except Exception as e:
             logging.error(traceback.format_exc())
+            await consumer.stop()
