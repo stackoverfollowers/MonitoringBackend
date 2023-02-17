@@ -25,6 +25,8 @@ async def startup_init():
 
 app.include_router(api_router)
 
-import uvicorn
 
-uvicorn.run(app)
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app)
