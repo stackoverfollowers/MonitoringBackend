@@ -27,6 +27,7 @@ class Vibration:
 
 @dataclass
 class Bearing:
+    index: int
     temps: Temps = None
     vibration: Vibration | None = None
 
@@ -80,7 +81,7 @@ class ExhausterPreMapInfo:
     exhauster_name: str
     exhauster_pre_index: int
 
-    temperatures: set
+    temperatures: list
 
     alarm_maxes: list
     alarm_mins: list

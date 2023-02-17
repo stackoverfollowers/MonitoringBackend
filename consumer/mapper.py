@@ -36,12 +36,19 @@ class ExMapper:
             )
             yield first_key, second_key, float(value)
 
+    def _get_index(self, attr_name: str, key: int, items: ExhausterPreMapInfo):
+        "эээ"
+        index = getattr(items, attr_name).index(key)
+        if index >= 2:
+            index += 4
+        return index
+
     def map_bearings(self) -> list[ExhausterInfo]:
         exhauster_infos = [
             ExhausterPreMapInfo(
                 exhauster_name="У-171",
                 exhauster_pre_index=2,
-                temperatures={27, 28, 29, 30, 31, 32, 33, 34, 35},
+                temperatures=[27, 28, 29, 30, 31, 32, 33, 34, 35],
                 alarm_maxes=list(range(65, 73 + 1)),
                 alarm_mins=list(range(65, 73 + 1)),
                 warning_maxes=list(range(83, 91 + 1)),
@@ -65,7 +72,7 @@ class ExMapper:
             ExhausterPreMapInfo(
                 exhauster_name="У-172",
                 exhauster_pre_index=2,
-                temperatures={43, 44, 45, 47, 48, 49, 50, 51, 52},
+                temperatures=[43, 44, 45, 47, 48, 49, 50, 51, 52],
                 alarm_maxes=list(range(101, 109 + 1)),
                 alarm_mins=list(range(110, 118 + 1)),
                 warning_maxes=list(range(119, 127 + 1)),
@@ -89,7 +96,7 @@ class ExMapper:
             ExhausterPreMapInfo(
                 exhauster_name="Ф-171",
                 exhauster_pre_index=0,
-                temperatures={27, 28, 29, 30, 31, 32, 33, 34, 35},
+                temperatures=[27, 28, 29, 30, 31, 32, 33, 34, 35],
                 alarm_maxes=list(range(63, 71 + 1)),
                 alarm_mins=list(range(72, 80 + 1)),
                 warning_maxes=list(range(81, 89 + 1)),
@@ -113,7 +120,7 @@ class ExMapper:
             ExhausterPreMapInfo(
                 exhauster_name="Ф-172",
                 exhauster_pre_index=0,
-                temperatures={43, 44, 45, 47, 48, 49, 50, 51, 52},
+                temperatures=[43, 44, 45, 47, 48, 49, 50, 51, 52],
                 alarm_maxes=list(range(99, 107 + 1)),
                 alarm_mins=list(range(108, 116 + 1)),
                 warning_maxes=list(range(117, 125 + 1)),
@@ -137,7 +144,7 @@ class ExMapper:
             ExhausterPreMapInfo(
                 exhauster_name="Х-171",
                 exhauster_pre_index=3,
-                temperatures={27, 28, 29, 30, 31, 32, 33, 34, 35},
+                temperatures=[27, 28, 29, 30, 31, 32, 33, 34, 35],
                 alarm_maxes=list(range(63, 71 + 1)),
                 alarm_mins=list(range(72, 80 + 1)),
                 warning_maxes=list(range(81, 89 + 1)),
@@ -161,7 +168,7 @@ class ExMapper:
             ExhausterPreMapInfo(
                 exhauster_name="Х-172",
                 exhauster_pre_index=3,
-                temperatures={43, 44, 45, 47, 48, 49, 50, 51, 52},
+                temperatures=[43, 44, 45, 47, 48, 49, 50, 51, 52],
                 alarm_maxes=list(range(99, 107 + 1)),
                 alarm_mins=list(range(108, 116 + 1)),
                 warning_maxes=list(range(117, 125 + 1)),
@@ -201,7 +208,10 @@ class ExMapper:
                         )
                     )[0]
                     parsed_exhauster.bearings.append(
-                        Bearing(temps=Temps(temp=value, setting_temp=SettingStats()))
+                        Bearing(
+                            temps=Temps(temp=value, setting_temp=SettingStats()),
+                            index=list(exhauster.temperatures).index(second_key) + 1,
+                        )
                     )
 
         for first_key, second_key, value in self._signals_iter():
@@ -230,71 +240,97 @@ class ExMapper:
                     parsed_exhauster.bearings[
                         exhauster.warning_mins.index(second_key)
                     ].temps.setting_temp.warning_min = value
-
+                # elif эээ ээээ ну ээээ:
+                #     continue
                 elif second_key in exhauster.horizontal_vibration:
                     parsed_exhauster.bearings[
-                        exhauster.horizontal_vibration.index(second_key)
+                        self._get_index("horizontal_vibration", second_key, exhauster)
                     ].vibration = Vibration(horizontal_vibration=value)
                 elif second_key in exhauster.horizontal_vibration_alarm_maxes:
                     parsed_exhauster.bearings[
-                        exhauster.horizontal_vibration_alarm_maxes.index(second_key)
+                        self._get_index(
+                            "horizontal_vibration_alarm_maxes", second_key, exhauster
+                        )
                     ].vibration.horizontal_vibration_stats = SettingStats(
                         alarm_max=value
                     )
                 elif second_key in exhauster.horizontal_vibration_alarm_mins:
                     parsed_exhauster.bearings[
-                        exhauster.horizontal_vibration_alarm_mins.index(second_key)
+                        self._get_index(
+                            "horizontal_vibration_alarm_mins", second_key, exhauster
+                        )
                     ].vibration.horizontal_vibration_stats.alarm_min = value
                 elif second_key in exhauster.horizontal_vibration_warning_maxes:
                     parsed_exhauster.bearings[
-                        exhauster.horizontal_vibration_warning_maxes.index(second_key)
+                        self._get_index(
+                            "horizontal_vibration_warning_maxes", second_key, exhauster
+                        )
                     ].vibration.horizontal_vibration_stats.warning_max = value
                 elif second_key in exhauster.horizontal_vibration_warning_mins:
                     parsed_exhauster.bearings[
-                        exhauster.horizontal_vibration_warning_mins.index(second_key)
+                        self._get_index(
+                            "horizontal_vibration_warning_mins", second_key, exhauster
+                        )
                     ].vibration.horizontal_vibration_stats.warning_min = value
 
                 elif second_key in exhauster.vertical_vibration:
                     parsed_exhauster.bearings[
-                        exhauster.vertical_vibration.index(second_key)
+                        self._get_index("vertical_vibration", second_key, exhauster)
                     ].vibration.vertical_vibration = value
                 elif second_key in exhauster.vertical_vibration_alarm_maxes:
                     parsed_exhauster.bearings[
-                        exhauster.vertical_vibration_alarm_maxes.index(second_key)
+                        self._get_index(
+                            "vertical_vibration_alarm_maxes", second_key, exhauster
+                        )
                     ].vibration.vertical_vibration_stats = SettingStats(alarm_max=value)
                 elif second_key in exhauster.vertical_vibration_alarm_mins:
                     parsed_exhauster.bearings[
-                        exhauster.vertical_vibration_alarm_mins.index(second_key)
+                        self._get_index(
+                            "vertical_vibration_alarm_mins", second_key, exhauster
+                        )
                     ].vibration.vertical_vibration_stats.alarm_min = value
                 elif second_key in exhauster.vertical_vibration_warning_maxes:
                     parsed_exhauster.bearings[
-                        exhauster.vertical_vibration_warning_maxes.index(second_key)
+                        self._get_index(
+                            "vertical_vibration_warning_maxes", second_key, exhauster
+                        )
                     ].vibration.vertical_vibration_stats.warning_max = value
                 elif second_key in exhauster.vertical_vibration_warning_mins:
                     parsed_exhauster.bearings[
-                        exhauster.vertical_vibration_warning_mins.index(second_key)
+                        self._get_index(
+                            "vertical_vibration_warning_mins", second_key, exhauster
+                        )
                     ].vibration.vertical_vibration_stats.warning_min = value
 
                 elif second_key in exhauster.axial_vibrations:
                     parsed_exhauster.bearings[
-                        exhauster.axial_vibrations.index(second_key)
+                        self._get_index("axial_vibrations", second_key, exhauster)
                     ].vibration.axial_vibration = value
                 elif second_key in exhauster.axial_vibrations_alarm_maxes:
                     parsed_exhauster.bearings[
-                        exhauster.axial_vibrations_alarm_maxes.index(second_key)
+                        self._get_index(
+                            "axial_vibrations_alarm_maxes", second_key, exhauster
+                        )
                     ].vibration.axial_vibration_stats = SettingStats(alarm_max=value)
                 elif second_key in exhauster.axial_vibrations_alarm_mins:
                     parsed_exhauster.bearings[
-                        exhauster.axial_vibrations_alarm_mins.index(second_key)
+                        self._get_index(
+                            "axial_vibrations_alarm_mins", second_key, exhauster
+                        )
                     ].vibration.axial_vibration_stats.alarm_min = value
                 elif second_key in exhauster.axial_vibrations_warning_maxes:
                     parsed_exhauster.bearings[
-                        exhauster.axial_vibrations_warning_maxes.index(second_key)
+                        self._get_index(
+                            "axial_vibrations_warning_maxes", second_key, exhauster
+                        )
                     ].vibration.axial_vibration_stats.warning_max = value
                 elif second_key in exhauster.axial_vibrations_warning_mins:
                     parsed_exhauster.bearings[
-                        exhauster.axial_vibrations_warning_mins.index(second_key)
+                        self._get_index(
+                            "axial_vibrations_warning_mins", second_key, exhauster
+                        )
                     ].vibration.axial_vibration_stats.warning_min = value
+
         return exhausters_parsed
 
     def map_chillers(self) -> list[Chiller]:
