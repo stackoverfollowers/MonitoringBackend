@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass
@@ -73,3 +73,41 @@ class OilSystem:
 @dataclass
 class ExhausterWork:
     work: bool
+
+
+@dataclass
+class ExhausterPreMapInfo:
+
+    exhauster_name: str
+    exhauster_pre_index: int
+
+    temperatures: set
+
+    alarm_maxes: list
+    alarm_mins: list
+    warning_maxes: list
+    warning_mins: list
+
+    axial_vibrations: list
+    axial_vibrations_alarm_maxes: list
+    axial_vibrations_alarm_mins: list
+    axial_vibrations_warning_maxes: list
+    axial_vibrations_warning_mins: list
+
+    horizontal_vibration: list
+    horizontal_vibration_alarm_maxes: list
+    horizontal_vibration_alarm_mins: list
+    horizontal_vibration_warning_maxes: list
+    horizontal_vibration_warning_mins: list
+
+    vertical_vibration: list
+    vertical_vibration_alarm_maxes: list
+    vertical_vibration_alarm_mins: list
+    vertical_vibration_warning_maxes: list
+    vertical_vibration_warning_mins: list
+
+
+@dataclass
+class ExhausterInfo:
+    exhauster_name: str
+    bearings: list[Bearing] = field(default_factory=list)
