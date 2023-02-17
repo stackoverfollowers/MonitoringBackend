@@ -63,7 +63,7 @@ class ExMapper:
                 vertical_vibration_warning_mins=list(range(174, 183 + 1, 3)),
             ),
             ExhausterPreMapInfo(
-                exhauster_name="Уебок-172",
+                exhauster_name="У-172",
                 exhauster_pre_index=2,
                 temperatures={43, 44, 45, 47, 48, 49, 50, 51, 52},
                 alarm_maxes=list(range(101, 109 + 1)),
