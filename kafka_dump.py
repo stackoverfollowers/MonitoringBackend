@@ -8,7 +8,7 @@ from kafka import TopicPartition
 
 from config import KafkaConfig
 from consumer.mapper import ExMapper
-from db.db import write_in_base
+from db.db import mongodb
 
 
 async def consume_forever():
@@ -45,7 +45,7 @@ async def consume_forever():
                 mapper = ExMapper(msg_dict["value"])
                 print(mapper.moment)
 
-                result_id = await write_in_base(data=msg_dict)
+                result_id = await mongodb.write_in_base(data=msg_dict)
                 print(f"{result_id=}")
         except Exception as e:
             print(traceback.format_exc())
