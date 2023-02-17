@@ -24,9 +24,9 @@ async def consume_forever():
         request_timeout_ms=1000,
     )
 
+    await consumer.start()
     while True:
         try:
-            await consumer.start()
             print("Cool, we\'are connected!")
             async for msg in consumer:
                 msg_dict = msg.__dict__
@@ -47,4 +47,3 @@ async def consume_forever():
                 print(f"{result_id=}")
         except Exception as e:
             logging.error(traceback.format_exc())
-            await consumer.stop()
