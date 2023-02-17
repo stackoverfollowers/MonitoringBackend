@@ -1,4 +1,5 @@
 import datetime
+from typing import Optional
 
 import pydantic
 
@@ -8,8 +9,8 @@ class BearingResponse(pydantic.BaseModel):
     is_temp_warning: bool
     is_temp_alarm: bool
 
-    is_vibration_warning: bool
-    is_vibration_alarm: bool
+    is_vibration_warning: Optional[bool] = None
+    is_vibration_alarm: Optional[bool] = None
 
 
 class Exhauster(pydantic.BaseModel):

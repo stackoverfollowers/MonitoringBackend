@@ -33,16 +33,16 @@ async def consume_forever():
                 msg_dict["value"] = json.loads(msg_dict["value"].decode("utf-8"))
 
                 mapper = ExMapper(msg_dict["value"])
-                print(mapper.map_bearings())
+                # print(mapper.map_bearings())
                 # print(mapper.map_chiller())
                 # print(mapper.map_gas_manifold())
                 # print(mapper.map_valve())
                 # print(mapper.map_main_gearing())
                 # print(mapper.map_oil_system())
                 # print(mapper.map_exhauster_work())
-                print("\n\n")
+                # print("\n\n")
 
                 result_id = await mongodb.write_in_base(data=msg_dict)
-                print(f"{result_id=}")
+                # print(f"{result_id=}")
         except Exception as e:
             logging.error(traceback.format_exc())
