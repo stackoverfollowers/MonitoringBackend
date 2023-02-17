@@ -1,4 +1,5 @@
 import asyncio
+import logging
 
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
@@ -24,6 +25,8 @@ async def startup_init():
 
 
 app.include_router(api_router)
+_log_format = f"%(asctime)s - [%(levelname)s] - %(name)s - (%(filename)s).%(funcName)s(%(lineno)d) - %(message)s"
+logging.basicConfig(filename="log.txt", format=_log_format, level="INFO")
 
 
 if __name__ == "__main__":

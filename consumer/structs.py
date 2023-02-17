@@ -3,31 +3,31 @@ from dataclasses import dataclass
 
 @dataclass
 class SettingStats:
-    alarm_max: float
-    alarm_min: float
-    warning_max: float
-    warning_min: float
+    alarm_max: float = None
+    alarm_min: float = None
+    warning_max: float = None
+    warning_min: float = None
 
 
 @dataclass
 class Temps:
     temp: float
-    setting_temp: SettingStats
+    setting_temp: SettingStats = None
 
 
 @dataclass
 class Vibration:
-    axial_vibration: float
-    axial_vibration_stats: SettingStats
-    horizontal_vibration: float
-    horizontal_vibration_stats: SettingStats
-    vertical_vibration: float
-    vertical_vibration_stats: SettingStats
+    axial_vibration: float = None
+    axial_vibration_stats: SettingStats = None
+    horizontal_vibration: float = None
+    horizontal_vibration_stats: SettingStats = None
+    vertical_vibration: float = None
+    vertical_vibration_stats: SettingStats = None
 
 
 @dataclass
 class Bearing:
-    temps: Temps
+    temps: Temps = None
     vibration: Vibration | None = None
 
 
@@ -51,8 +51,8 @@ class GasManifold:
 
 @dataclass
 class ValvePosition:
-    gas_valve_closed: float
-    gas_valve_open: float
+    gas_valve_closed: bool
+    gas_valve_open: bool
     gas_valve_position: float
 
 
@@ -72,4 +72,4 @@ class OilSystem:
 
 @dataclass
 class ExhausterWork:
-    work: float
+    work: bool

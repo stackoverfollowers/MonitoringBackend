@@ -4,8 +4,7 @@ from bson import ObjectId
 from config import MongoConfig
 
 _CLIENT = motor.motor_asyncio.AsyncIOMotorClient(
-    MongoConfig.CONNECTION_STRING,
-    serverSelectionTimeoutMS=5000
+    MongoConfig.CONNECTION_STRING, serverSelectionTimeoutMS=5000
 )
 _COLLECTION = _CLIENT[MongoConfig.DB_NAME][MongoConfig.COLLECTION_NAME]
 
