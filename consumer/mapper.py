@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Iterator
 
 from consumer.structs import (
@@ -60,7 +61,8 @@ class ExMapper:
         vertical_vibration_warning_mins = list(range(220, 229 + 1, 3))
 
         bearings = []
-        self.data.pop("moment")
+        moment = datetime.fromisoformat(self.data.pop("moment"))
+        print(f"{moment=}")
 
         # сначала созадем просто все подшипники потом туда суем дату
         for first_key, second_key, value in self._bearings_iter():
