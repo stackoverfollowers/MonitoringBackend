@@ -21,11 +21,13 @@ class ExMapper:
         self.data = exhauster_data
         self.ex_prefix = "SM_Exgauster\\"
         self.bearing_prefix = 3
-        self.moment = datetime.fromisoformat(self.data.pop("moment"))
+        self.moment = datetime.fromisoformat(self.data["moment"])
 
     def _bearings_iter(self) -> Iterator[tuple[int, int, float]]:
         for key, value in self.data.items():
             key_data = key.lstrip(self.ex_prefix)
+            if key_data == "moment":
+                continue
             if "." in key_data:
                 continue
             first_key, second_key = map(
