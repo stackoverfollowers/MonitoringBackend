@@ -77,7 +77,6 @@ class ExhausterWork:
 
 @dataclass
 class ExhausterPreMapInfo:
-
     exhauster_name: str
     exhauster_pre_index: int
 

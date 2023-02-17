@@ -3,10 +3,13 @@ import datetime
 import pydantic
 
 
-class Bearing(pydantic.BaseModel):
+class BearingResponse(pydantic.BaseModel):
     index: int
-    is_warning: bool
-    is_alarm: bool
+    is_temp_warning: bool
+    is_temp_alarm: bool
+
+    is_vibration_warning: bool
+    is_vibration_alarm: bool
 
 
 class Exhauster(pydantic.BaseModel):
@@ -18,7 +21,7 @@ class Exhauster(pydantic.BaseModel):
     days_forecast: int
     forecast_warning: bool
     forecast_alarm: bool
-    bearings: list[Bearing]
+    bearings: list[BearingResponse]
     oil_level: float
     oil_pressure: float
 

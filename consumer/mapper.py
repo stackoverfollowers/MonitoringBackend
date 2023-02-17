@@ -12,7 +12,9 @@ from consumer.structs import (
     MainGearing,
     OilSystem,
     ExhausterWork,
-    Vibration, ExhausterPreMapInfo, ExhausterInfo,
+    Vibration,
+    ExhausterPreMapInfo,
+    ExhausterInfo,
 )
 
 
@@ -39,183 +41,147 @@ class ExMapper:
             ExhausterPreMapInfo(
                 exhauster_name="У-171",
                 exhauster_pre_index=2,
-
                 temperatures={27, 28, 29, 30, 31, 32, 33, 34, 35},
-
                 alarm_maxes=list(range(65, 73 + 1)),
                 alarm_mins=list(range(65, 73 + 1)),
                 warning_maxes=list(range(83, 91 + 1)),
                 warning_mins=list(range(92, 100 + 1)),
-
                 axial_vibrations=list(range(2, 11 + 1, 3)),
                 axial_vibrations_alarm_maxes=list(range(139, 148 + 1, 3)),
                 axial_vibrations_alarm_mins=list(range(151, 160 + 1, 3)),
                 axial_vibrations_warning_maxes=list(range(163, 172 + 1, 3)),
                 axial_vibrations_warning_mins=list(range(175, 184 + 1, 3)),
-
                 horizontal_vibration=list(range(0, 9 + 1, 3)),
                 horizontal_vibration_alarm_maxes=list(range(137, 146 + 1, 3)),
                 horizontal_vibration_alarm_mins=list(range(149, 158 + 1, 3)),
                 horizontal_vibration_warning_maxes=list(range(161, 170 + 1, 3)),
                 horizontal_vibration_warning_mins=list(range(173, 182 + 1, 3)),
-
                 vertical_vibration=list(range(1, 10 + 1, 3)),
                 vertical_vibration_alarm_maxes=list(range(138, 147 + 1, 3)),
                 vertical_vibration_alarm_mins=list(range(150, 159 + 1, 3)),
                 vertical_vibration_warning_maxes=list(range(162, 171 + 1, 3)),
                 vertical_vibration_warning_mins=list(range(174, 183 + 1, 3)),
-
             ),
             ExhausterPreMapInfo(
                 exhauster_name="Уебок-172",
                 exhauster_pre_index=2,
-
                 temperatures={43, 44, 45, 47, 48, 49, 50, 51, 52},
-
                 alarm_maxes=list(range(101, 109 + 1)),
                 alarm_mins=list(range(110, 118 + 1)),
                 warning_maxes=list(range(119, 127 + 1)),
                 warning_mins=list(range(128, 136 + 1)),
-
                 axial_vibrations=list(range(14, 23 + 1, 3)),
                 axial_vibrations_alarm_maxes=list(range(187, 196 + 1, 3)),
                 axial_vibrations_alarm_mins=list(range(199, 208 + 1, 3)),
                 axial_vibrations_warning_maxes=list(range(211, 220 + 1, 3)),
                 axial_vibrations_warning_mins=list(range(223, 232 + 1, 3)),
-
                 horizontal_vibration=list(range(12, 21 + 1, 3)),
                 horizontal_vibration_alarm_maxes=list(range(185, 194 + 1, 3)),
                 horizontal_vibration_alarm_mins=list(range(197, 206 + 1, 3)),
                 horizontal_vibration_warning_maxes=list(range(209, 218 + 1, 3)),
                 horizontal_vibration_warning_mins=list(range(221, 230 + 1, 3)),
-
                 vertical_vibration=list(range(13, 22 + 1, 3)),
                 vertical_vibration_alarm_maxes=list(range(186, 195 + 1, 3)),
                 vertical_vibration_alarm_mins=list(range(198, 207 + 1, 3)),
                 vertical_vibration_warning_maxes=list(range(210, 219 + 1, 3)),
                 vertical_vibration_warning_mins=list(range(222, 231 + 1, 3)),
-
             ),
             ExhausterPreMapInfo(
                 exhauster_name="Ф-171",
                 exhauster_pre_index=0,
-
                 temperatures={27, 28, 29, 30, 31, 32, 33, 34, 35},
-
                 alarm_maxes=list(range(63, 71 + 1)),
                 alarm_mins=list(range(72, 80 + 1)),
                 warning_maxes=list(range(81, 89 + 1)),
                 warning_mins=list(range(90, 98 + 1)),
-
                 axial_vibrations=list(range(2, 11 + 1, 3)),
                 axial_vibrations_alarm_maxes=list(range(137, 146 + 1, 3)),
                 axial_vibrations_alarm_mins=list(range(149, 158 + 1, 3)),
                 axial_vibrations_warning_maxes=list(range(161, 170 + 1, 3)),
                 axial_vibrations_warning_mins=list(range(173, 182 + 1, 3)),
-
                 horizontal_vibration=list(range(0, 9 + 1, 3)),
                 horizontal_vibration_alarm_maxes=list(range(135, 144 + 1, 3)),
                 horizontal_vibration_alarm_mins=list(range(147, 156 + 1, 3)),
                 horizontal_vibration_warning_maxes=list(range(159, 168 + 1, 3)),
                 horizontal_vibration_warning_mins=list(range(171, 180 + 1, 3)),
-
                 vertical_vibration=list(range(1, 10 + 1, 3)),
                 vertical_vibration_alarm_maxes=list(range(136, 145 + 1, 3)),
                 vertical_vibration_alarm_mins=list(range(148, 157 + 1, 3)),
                 vertical_vibration_warning_maxes=list(range(160, 169 + 1, 3)),
                 vertical_vibration_warning_mins=list(range(172, 181 + 1, 3)),
-
             ),
             ExhausterPreMapInfo(
                 exhauster_name="Ф-172",
                 exhauster_pre_index=0,
-
                 temperatures={43, 44, 45, 47, 48, 49, 50, 51, 52},
-
                 alarm_maxes=list(range(99, 107 + 1)),
                 alarm_mins=list(range(108, 116 + 1)),
                 warning_maxes=list(range(117, 125 + 1)),
                 warning_mins=list(range(126, 134 + 1)),
-
                 axial_vibrations=list(range(14, 23 + 1, 3)),
                 axial_vibrations_alarm_maxes=list(range(185, 194 + 1, 3)),
                 axial_vibrations_alarm_mins=list(range(197, 206 + 1, 3)),
                 axial_vibrations_warning_maxes=list(range(209, 218 + 1, 3)),
                 axial_vibrations_warning_mins=list(range(221, 230 + 1, 3)),
-
                 horizontal_vibration=list(range(12, 21 + 1, 3)),
                 horizontal_vibration_alarm_maxes=list(range(183, 192 + 1, 3)),
                 horizontal_vibration_alarm_mins=list(range(195, 204 + 1, 3)),
                 horizontal_vibration_warning_maxes=list(range(207, 216 + 1, 3)),
                 horizontal_vibration_warning_mins=list(range(219, 228 + 1, 3)),
-
                 vertical_vibration=list(range(13, 22 + 1, 3)),
                 vertical_vibration_alarm_maxes=list(range(184, 193 + 1, 3)),
                 vertical_vibration_alarm_mins=list(range(196, 205 + 1, 3)),
                 vertical_vibration_warning_maxes=list(range(208, 217 + 1, 3)),
                 vertical_vibration_warning_mins=list(range(220, 229 + 1, 3)),
-
             ),
             ExhausterPreMapInfo(
                 exhauster_name="Х-171",
                 exhauster_pre_index=3,
-
                 temperatures={27, 28, 29, 30, 31, 32, 33, 34, 35},
-
                 alarm_maxes=list(range(63, 71 + 1)),
                 alarm_mins=list(range(72, 80 + 1)),
                 warning_maxes=list(range(81, 89 + 1)),
                 warning_mins=list(range(90, 98 + 1)),
-
                 axial_vibrations=list(range(2, 11 + 1, 3)),
                 axial_vibrations_alarm_maxes=list(range(137, 146 + 1, 3)),
                 axial_vibrations_alarm_mins=list(range(149, 158 + 1, 3)),
                 axial_vibrations_warning_maxes=list(range(161, 170 + 1, 3)),
                 axial_vibrations_warning_mins=list(range(173, 182 + 1, 3)),
-
                 horizontal_vibration=list(range(0, 9 + 1, 3)),
                 horizontal_vibration_alarm_maxes=list(range(135, 144 + 1, 3)),
                 horizontal_vibration_alarm_mins=list(range(147, 156 + 1, 3)),
                 horizontal_vibration_warning_maxes=list(range(159, 168 + 1, 3)),
                 horizontal_vibration_warning_mins=list(range(171, 180 + 1, 3)),
-
                 vertical_vibration=list(range(1, 10 + 1, 3)),
                 vertical_vibration_alarm_maxes=list(range(136, 145 + 1, 3)),
                 vertical_vibration_alarm_mins=list(range(148, 157 + 1, 3)),
                 vertical_vibration_warning_maxes=list(range(160, 169 + 1, 3)),
                 vertical_vibration_warning_mins=list(range(172, 181 + 1, 3)),
-
             ),
             ExhausterPreMapInfo(
                 exhauster_name="Х-172",
                 exhauster_pre_index=3,
-
                 temperatures={43, 44, 45, 47, 48, 49, 50, 51, 52},
-
                 alarm_maxes=list(range(99, 107 + 1)),
                 alarm_mins=list(range(108, 116 + 1)),
                 warning_maxes=list(range(117, 125 + 1)),
                 warning_mins=list(range(126, 134 + 1)),
-
                 axial_vibrations=list(range(14, 23 + 1, 3)),
                 axial_vibrations_alarm_maxes=list(range(185, 194 + 1, 3)),
                 axial_vibrations_alarm_mins=list(range(197, 206 + 1, 3)),
                 axial_vibrations_warning_maxes=list(range(209, 218 + 1, 3)),
                 axial_vibrations_warning_mins=list(range(221, 230 + 1, 3)),
-
                 horizontal_vibration=list(range(12, 21 + 1, 3)),
                 horizontal_vibration_alarm_maxes=list(range(183, 192 + 1, 3)),
                 horizontal_vibration_alarm_mins=list(range(195, 204 + 1, 3)),
                 horizontal_vibration_warning_maxes=list(range(207, 216 + 1, 3)),
                 horizontal_vibration_warning_mins=list(range(219, 228 + 1, 3)),
-
                 vertical_vibration=list(range(13, 22 + 1, 3)),
                 vertical_vibration_alarm_maxes=list(range(184, 193 + 1, 3)),
                 vertical_vibration_alarm_mins=list(range(196, 205 + 1, 3)),
                 vertical_vibration_warning_maxes=list(range(208, 217 + 1, 3)),
                 vertical_vibration_warning_mins=list(range(220, 229 + 1, 3)),
-
-            )
+            ),
         ]
 
         exhausters_parsed = [
@@ -228,31 +194,26 @@ class ExMapper:
                 if first_key != exhauster.exhauster_pre_index:
                     continue
                 if second_key in exhauster.temperatures:
-                    parsed_exhauster: ExhausterInfo = list(filter(
-                        lambda x: x.exhauster_name == exhauster.exhauster_name,
-                        exhausters_parsed
-                    ))[0]
-                    # if exhauster.exhauster_name == "У-171":
-                    #     print(f"Exhauster {exhauster.exhauster_name} - bearing temp on [{first_key}:{second_key}]")
+                    parsed_exhauster: ExhausterInfo = list(
+                        filter(
+                            lambda x: x.exhauster_name == exhauster.exhauster_name,
+                            exhausters_parsed,
+                        )
+                    )[0]
                     parsed_exhauster.bearings.append(
                         Bearing(temps=Temps(temp=value, setting_temp=SettingStats()))
                     )
-        print(f"{len(exhausters_parsed)=}")
-        for item in exhausters_parsed:
-            print(f"{item.exhauster_name=}")
-            print(f"{len(item.bearings)=}")
-            for bearing in item.bearings:
-                print(f"{bearing.temps}")
 
         for first_key, second_key, value in self._signals_iter():
             for exhauster in filter(
-                    lambda x: x.exhauster_pre_index == first_key,
-                    exhauster_infos
+                lambda x: x.exhauster_pre_index == first_key, exhauster_infos
             ):
-                parsed_exhauster: ExhausterInfo = list(filter(
-                    lambda x: x.exhauster_name == exhauster.exhauster_name,
-                    exhausters_parsed
-                ))[0]
+                parsed_exhauster: ExhausterInfo = list(
+                    filter(
+                        lambda x: x.exhauster_name == exhauster.exhauster_name,
+                        exhausters_parsed,
+                    )
+                )[0]
                 if second_key in exhauster.alarm_maxes:
                     parsed_exhauster.bearings[
                         exhauster.alarm_maxes.index(second_key)
@@ -273,13 +234,13 @@ class ExMapper:
                 elif second_key in exhauster.horizontal_vibration:
                     parsed_exhauster.bearings[
                         exhauster.horizontal_vibration.index(second_key)
-                    ].vibration = Vibration(
-                        horizontal_vibration=value
-                    )
+                    ].vibration = Vibration(horizontal_vibration=value)
                 elif second_key in exhauster.horizontal_vibration_alarm_maxes:
                     parsed_exhauster.bearings[
                         exhauster.horizontal_vibration_alarm_maxes.index(second_key)
-                    ].vibration.horizontal_vibration_stats = SettingStats(alarm_max=value)
+                    ].vibration.horizontal_vibration_stats = SettingStats(
+                        alarm_max=value
+                    )
                 elif second_key in exhauster.horizontal_vibration_alarm_mins:
                     parsed_exhauster.bearings[
                         exhauster.horizontal_vibration_alarm_mins.index(second_key)
@@ -334,9 +295,6 @@ class ExMapper:
                     parsed_exhauster.bearings[
                         exhauster.axial_vibrations_warning_mins.index(second_key)
                     ].vibration.axial_vibration_stats.warning_min = value
-
-        for exhauster in exhausters_parsed:
-            print(exhauster.bearings)
         return exhausters_parsed
 
     def map_chillers(self) -> list[Chiller]:

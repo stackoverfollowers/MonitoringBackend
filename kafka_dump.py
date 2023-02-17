@@ -24,11 +24,15 @@ async def consume_forever():
         group_id=KafkaConfig.GROUP_ID,
         request_timeout_ms=1000,
         enable_auto_commit=False,
-        auto_offset_reset="earliest"
+        auto_offset_reset="earliest",
     )
     await consumer.start()
     tp = TopicPartition(KafkaConfig.TOPIC, 0)
-    print(consumer.partitions_for_topic(KafkaConfig.TOPIC,))
+    print(
+        consumer.partitions_for_topic(
+            KafkaConfig.TOPIC,
+        )
+    )
     await consumer.seek_to_beginning(tp)
 
     while True:
@@ -52,4 +56,3 @@ if __name__ == "__main__":
     import asyncio
 
     asyncio.get_event_loop().run_until_complete(consume_forever())
-
