@@ -7,7 +7,7 @@ from aiokafka.helpers import create_ssl_context
 
 from config import KafkaConfig
 from consumer.mapper import ExMapper
-from db.db import write_in_base
+from db.db import mongodb
 
 
 async def consume_forever():
@@ -42,7 +42,7 @@ async def consume_forever():
                 # print(mapper.map_exhauster_work())
                 print("\n\n")
 
-                result_id = await write_in_base(data=msg_dict)
+                result_id = await mongodb.write_in_base(data=msg_dict)
                 print(f"{result_id=}")
         except Exception as e:
             logging.error(traceback.format_exc())
