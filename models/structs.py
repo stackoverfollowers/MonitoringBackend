@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 
 from consumer.structs import (
     OilSystem,
@@ -13,6 +14,7 @@ from consumer.structs import (
 @dataclass
 class BearingGraphData:
     temp: float
+    index: int = 1
     axial_vibration: float | None = None
     horizontal_vibration: float | None = None
     vertical_vibration: float | None = None
@@ -53,6 +55,7 @@ class ChillerGraphData:
 
 @dataclass
 class GraphData:
+    moment: datetime
     bearings_data: list[BearingGraphData]
     oil_data: OilSystem
     electricity_data: MainGearing
@@ -62,6 +65,7 @@ class GraphData:
 
 @dataclass
 class SingleExhausterData:
+    moment: datetime
     bearings_data: ExhausterInfo | None = None
     oil_data: OilSystem | None = None
     electricity_data: MainGearing | None = None
@@ -71,6 +75,7 @@ class SingleExhausterData:
 
     def get_graphs_data(self):
         return GraphData(
+            moment=self.moment,
             bearings_data=[
                 BearingGraphData.from_bearing_data(bearing)
                 for bearing in self.bearings_data.bearings
@@ -84,6 +89,7 @@ class SingleExhausterData:
 
 @dataclass
 class ExhaustersData:
+    moment: datetime
     bearings_data: list[ExhausterInfo] = None
     oil_data: list[OilSystem] = None
     electricity_data: list[MainGearing] = None
@@ -93,6 +99,7 @@ class ExhaustersData:
 
     def get_single_exhauster_data(self, index: int):
         return SingleExhausterData(
+            moment=self.moment,
             bearings_data=self.bearings_data[index],
             oil_data=self.oil_data[index],
             electricity_data=self.electricity_data[index],

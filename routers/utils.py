@@ -13,6 +13,7 @@ def parse_exhauster_data(
         return BaseError(error=Error(status=1, desc="bad index"))
 
     exhausters_data = ExhaustersData(
+        moment=mapped_data.moment,
         bearings_data=bearings_data_all,
         oil_data=mapped_data.map_oil_systems(),
         electricity_data=mapped_data.map_main_gearings(),
