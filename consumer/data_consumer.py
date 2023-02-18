@@ -39,6 +39,7 @@ async def consume_forever():
     await consumer.start()
     while True:
         try:
+            logging.info("Cool, we'are connected!")
             print("Cool, we'are connected!")
             async for msg in consumer:
                 msg_dict = msg.__dict__

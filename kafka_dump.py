@@ -39,6 +39,7 @@ async def consume_forever():
         try:
             print("Cool, we'are connected!")
             async for msg in consumer:
+                print(msg)
                 msg_dict = msg.__dict__
                 msg_dict["value"] = json.loads(msg_dict["value"].decode("utf-8"))
 

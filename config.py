@@ -1,3 +1,10 @@
+import os
+
+import dotenv
+
+dotenv.load_dotenv()
+
+
 class KafkaConfig:
     CONTEXT_FILE = "CA.perm"
     TOPIC = "zsmk-9433-dev-01"
@@ -6,11 +13,13 @@ class KafkaConfig:
     SASL_MECHANISM = "SCRAM-SHA-512"
     SASL_PLAIN_USERNAME = "9433_reader"
     SASL_PLAIN_PASSWORD = "eUIpgWu0PWTJaTrjhjQD3.hoyhntiK"
-    BOOTSTRAP_SERVERS = "rc1a-b5e65f36lm3an1d5.mdb.yandexcloud.net:9091"
+    BOOTSTRAP_SERVERS = "rc1a-2ar1hqnl386tvq7k.mdb.yandexcloud.net:9091"
     GROUP_ID = "stackoverfollowers"
 
 
 class MongoConfig:
-    CONNECTION_STRING = "mongodb://localhost:27017"
-    DB_NAME = "main_db"
+    MONGO_USER = os.getenv("MONGO_USER")
+    MONGO_PASS = os.getenv("MONGO_PASS")
+    CONNECTION_STRING = f"mongodb://{MONGO_USER}:{MONGO_PASS}@mongodb:27017"
+    DB_NAME = os.getenv("MONGO_DB")
     COLLECTION_NAME = "data_col"
