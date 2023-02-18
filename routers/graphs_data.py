@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from fastapi import APIRouter
 
@@ -13,6 +13,10 @@ router = APIRouter()
 async def graphs_data_by_date(
     date_from: datetime, date_to: datetime, exhauster_index: int
 ):
+    # КОСТЫЛЬ!!!
+    date_from = date_from + timedelta(hours=3)
+    date_to = date_to + timedelta(hours=3)
+
     if exhauster_index < 0 or exhauster_index > 5:
         return BaseError(error=Error(status=1, desc="bad index"))
 
@@ -23,6 +27,7 @@ async def graphs_data_by_date(
     parsed_data = []
     for data in mapped_data_list:
         exhausters_data = ExhaustersData(
+            moment=data.moment,
             bearings_data=data.map_bearings(),
             oil_data=data.map_oil_systems(),
             electricity_data=data.map_main_gearings(),
