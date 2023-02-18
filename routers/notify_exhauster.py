@@ -5,6 +5,7 @@ from typing import Union
 
 from fastapi import APIRouter
 from starlette.websockets import WebSocket
+from websockets.exceptions import ConnectionClosedOK
 
 from consumer.data_consumer import last_data
 from consumer.mapper import ExMapper
@@ -72,14 +73,16 @@ async def notify_general_ws(websocket: WebSocket, index: int):
         await asyncio.sleep(0.33)
         if last_data.timestamp == old_timestamp:
             continue
-
-        await websocket.send_text(
-            json.dumps(
-                create_response(last_data.data, index).dict(),
-                ensure_ascii=False,
-                default=lambda x: str(x)
-                if not isinstance(x, datetime.datetime)
-                else x.timestamp(),
+        try:
+            await websocket.send_text(
+                json.dumps(
+                    create_response(last_data.data, index).dict(),
+                    ensure_ascii=False,
+                    default=lambda x: str(x)
+                    if not isinstance(x, datetime.datetime)
+                    else x.timestamp(),
+                )
             )
-        )
+        except ConnectionClosedOK:
+            continue
         old_timestamp = last_data.timestamp
