@@ -34,7 +34,7 @@ class ExMapper:
             first_key, second_key = map(
                 int, key_data.replace("[", "").replace("]", "").split(":")
             )
-            yield first_key, second_key, float(value)
+            yield first_key, second_key, round(float(value), 2)
 
     def _get_index(self, attr_name: str, key: int, items: ExhausterPreMapInfo):
         "эээ"

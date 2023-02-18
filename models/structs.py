@@ -5,22 +5,22 @@ from consumer.structs import OilSystem, ExhausterInfo, MainGearing, Chiller, Val
 
 @dataclass
 class SingleExhausterData:
-    bearings_data: ExhausterInfo
-    oil_data: OilSystem
-    electricity_data: MainGearing
-    chiller_data: Chiller
-    gas_valve_data: ValvePosition
-    gas_manifold_data: GasManifold
+    bearings_data: ExhausterInfo | None = None
+    oil_data: OilSystem | None = None
+    electricity_data: MainGearing | None = None
+    chiller_data: Chiller | None = None
+    gas_valve_data: ValvePosition | None = None
+    gas_manifold_data: GasManifold | None = None
 
 
 @dataclass
 class ExhaustersData:
-    bearings_data: list[ExhausterInfo]
-    oil_data: list[OilSystem]
-    electricity_data: list[MainGearing]
-    chiller_data: list[Chiller]
-    gas_valve_data: list[ValvePosition]
-    gas_manifold_data: list[GasManifold]
+    bearings_data: list[ExhausterInfo] = None
+    oil_data: list[OilSystem] = None
+    electricity_data: list[MainGearing] = None
+    chiller_data: list[Chiller] = None
+    gas_valve_data: list[ValvePosition] = None
+    gas_manifold_data: list[GasManifold] = None
 
     def get_single_exhauster_data(self, index: int):
         return SingleExhausterData(
