@@ -15,7 +15,9 @@ from models.exhauster_info import ExhausterInfoResponse, BearingExhausterRespons
 router = APIRouter()
 
 
-def create_response(data: dict, index: int) -> Union[ExhausterInfoResponse, BaseError]:
+def create_exhauster_info(
+    data: dict, index: int
+) -> Union[ExhausterInfoResponse, BaseError]:
     mapped_data = ExMapper(data)
     bearings_data_all = mapped_data.map_bearings()
 
@@ -34,29 +36,37 @@ def create_response(data: dict, index: int) -> Union[ExhausterInfoResponse, Base
         temp_status = (
             "alarm"
             if (75 < bearing.temps.temp >= 65)
-            else ("warning" if (bearing.temps.temp >= 75)
-                  else "default")
+            else ("warning" if (bearing.temps.temp >= 75) else "default")
         )
         if bearing.vibration is None:
-            vert_vibration_status = hor_vibration_status = axial_vibration_status = "default"
+            vert_vibration_status = (
+                hor_vibration_status
+            ) = axial_vibration_status = "default"
         else:
             vert_vibration_status = (
                 "alarm"
                 if (7.1 < bearing.vibration.vertical_vibration >= 4.5)
-                else ("warning" if (bearing.vibration.vertical_vibration >= 7.1)
-                      else "default")
+                else (
+                    "warning"
+                    if (bearing.vibration.vertical_vibration >= 7.1)
+                    else "default"
+                )
             )
             hor_vibration_status = (
                 "alarm"
                 if (7.1 < bearing.vibration.horizontal_vibration >= 4.5)
-                else ("warning" if (bearing.vibration.horizontal_vibration >= 7.1)
-                      else "default")
+                else (
+                    "warning"
+                    if (bearing.vibration.horizontal_vibration >= 7.1)
+                    else "default"
+                )
             )
             axial_vibration_status = (
                 "warning"
                 if (7.1 < bearing.vibration.axial_vibration >= 4.5)
-                else ("alarm" if (bearing.vibration.axial_vibration >= 7.1)
-                      else "default")
+                else (
+                    "alarm" if (bearing.vibration.axial_vibration >= 7.1) else "default"
+                )
             )
 
         new_bearing = BearingExhausterResponse(
@@ -78,37 +88,47 @@ def create_response(data: dict, index: int) -> Union[ExhausterInfoResponse, Base
         )
         bearings.append(new_bearing)
 
-    oil_level_status = ("warning" if oil_data.oil_level < 20.0
-                        else ("alarm" if oil_data.oil_level < 10.0
-                              else "default"))
+    oil_level_status = (
+        "warning"
+        if oil_data.oil_level < 20.0
+        else ("alarm" if oil_data.oil_level < 10.0 else "default")
+    )
 
     if index in (0, 1):
-        oil_pressure_status = ("alarm" if oil_data.oil_pressure < 0.5
-                               else "default")
-        rotor_current_status = ("warning" if electricity_data.rotor_current >= 250
-                                else "default")
+        oil_pressure_status = "alarm" if oil_data.oil_pressure < 0.5 else "default"
+        rotor_current_status = (
+            "warning" if electricity_data.rotor_current >= 250 else "default"
+        )
 
     else:
-        oil_pressure_status = ("alarm" if oil_data.oil_pressure < 0.2
-                               else "default")
-        rotor_current_status = ("warning" if electricity_data.rotor_current >= 200
-                                else "default")
+        oil_pressure_status = "alarm" if oil_data.oil_pressure < 0.2 else "default"
+        rotor_current_status = (
+            "warning" if electricity_data.rotor_current >= 200 else "default"
+        )
 
-    stator_current_status = ("alarm" if (electricity_data.stator_current >= 280)
-                             else ("warning" if (280 < electricity_data.stator_current >= 230)
-                                   else "default"))
+    stator_current_status = (
+        "alarm"
+        if (electricity_data.stator_current >= 280)
+        else (
+            "warning" if (280 < electricity_data.stator_current >= 230) else "default"
+        )
+    )
 
-    oil_temp_before_status = ("warning" if chiller_data.oil_temp.temperature_before >= 30
-                              else "default")
+    oil_temp_before_status = (
+        "warning" if chiller_data.oil_temp.temperature_before >= 30 else "default"
+    )
 
-    oil_temp_after_status = ("warning" if chiller_data.oil_temp.temperature_after >= 30
-                             else "default")
+    oil_temp_after_status = (
+        "warning" if chiller_data.oil_temp.temperature_after >= 30 else "default"
+    )
 
-    water_temp_before_status = ("warning" if chiller_data.water_temp.temperature_before >= 30
-                                else "default")
+    water_temp_before_status = (
+        "warning" if chiller_data.water_temp.temperature_before >= 30 else "default"
+    )
 
-    water_temp_after_status = ("warning" if chiller_data.water_temp.temperature_after >= 30
-                               else "default")
+    water_temp_after_status = (
+        "warning" if chiller_data.water_temp.temperature_after >= 30 else "default"
+    )
 
     return ExhausterInfoResponse(
         bearings=bearings,
@@ -149,7 +169,7 @@ async def notify_general_ws(websocket: WebSocket, index: int):
 
         await websocket.send_text(
             json.dumps(
-                create_response(last_data.data, index).dict(),
+                create_exhauster_info(last_data.data, index).dict(),
                 ensure_ascii=False,
                 default=lambda x: str(x)
                 if not isinstance(x, datetime.datetime)

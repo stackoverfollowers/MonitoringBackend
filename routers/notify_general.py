@@ -32,45 +32,35 @@ def create_response(data: dict):
             bearing = exhauster_bearings[i].bearings[j]
             bearing_temps = bearing.temps
             is_temp_alarm = (
-                    bearing.temps.temp is None
-                    or bearing.temps.setting_temp.alarm_max
-                    is None
-                    or bearing.temps.setting_temp.alarm_min
-                    is None
-                    or bearing.temps.temp
-                    >= bearing.temps.setting_temp.alarm_max
-                    or bearing.temps.temp
-                    <= bearing.temps.setting_temp.alarm_min
+                bearing.temps.temp is None
+                or bearing.temps.setting_temp.alarm_max is None
+                or bearing.temps.setting_temp.alarm_min is None
+                or bearing.temps.temp >= bearing.temps.setting_temp.alarm_max
+                or bearing.temps.temp <= bearing.temps.setting_temp.alarm_min
             )
             is_temp_warning = (
-                    bearing_temps.temp is None
-                    or bearing_temps.setting_temp.warning_min
-                    is None
-                    or bearing_temps.setting_temp.warning_max
-                    is None
-                    or bearing_temps.temp
-                    >= bearing_temps.setting_temp.warning_max
-                    or bearing_temps.temp
-                    <= bearing_temps.setting_temp.warning_min
+                bearing_temps.temp is None
+                or bearing_temps.setting_temp.warning_min is None
+                or bearing_temps.setting_temp.warning_max is None
+                or bearing_temps.temp >= bearing_temps.setting_temp.warning_max
+                or bearing_temps.temp <= bearing_temps.setting_temp.warning_min
             )
-            temp_status = "alarm" if is_temp_alarm else ("warning" if is_temp_warning else "default")
+            temp_status = (
+                "alarm"
+                if is_temp_alarm
+                else ("warning" if is_temp_warning else "default")
+            )
             bearing_vibration = bearing.vibration
 
             is_vibration_warning = (
-                    bearing_vibration.vertical_vibration
-                    is None
-                    or bearing_vibration.vertical_vibration_stats.warning_max
-                    is None
-                    or bearing_vibration.vertical_vibration_stats.warning_min
-                    is None
-                    or bearing_vibration.axial_vibration_stats.warning_max
-                    is None
-                    or bearing_vibration.axial_vibration_stats.warning_min
-                    is None
-                    or bearing_vibration.horizontal_vibration_stats.warning_max
-                    is None
-                    or bearing_vibration.horizontal_vibration_stats.warning_min
-                    is None
+                (
+                    bearing_vibration.vertical_vibration is None
+                    or bearing_vibration.vertical_vibration_stats.warning_max is None
+                    or bearing_vibration.vertical_vibration_stats.warning_min is None
+                    or bearing_vibration.axial_vibration_stats.warning_max is None
+                    or bearing_vibration.axial_vibration_stats.warning_min is None
+                    or bearing_vibration.horizontal_vibration_stats.warning_max is None
+                    or bearing_vibration.horizontal_vibration_stats.warning_min is None
                     or bearing_vibration.vertical_vibration
                     >= bearing_vibration.vertical_vibration_stats.warning_max
                     or bearing_vibration.vertical_vibration
@@ -83,23 +73,20 @@ def create_response(data: dict):
                     >= bearing_vibration.horizontal_vibration_stats.warning_max
                     or bearing.vibration.horizontal_vibration
                     <= bearing_vibration.horizontal_vibration_stats.warning_min
-            ) if bearing_vibration is not None else None
+                )
+                if bearing_vibration is not None
+                else None
+            )
 
             is_vibration_alarm = (
-                    bearing_vibration.vertical_vibration
-                    is None
-                    or bearing_vibration.vertical_vibration_stats.alarm_max
-                    is None
-                    or bearing_vibration.vertical_vibration_stats.alarm_min
-                    is None
-                    or bearing_vibration.axial_vibration_stats.alarm_max
-                    is None
-                    or bearing_vibration.axial_vibration_stats.alarm_min
-                    is None
-                    or bearing_vibration.horizontal_vibration_stats.alarm_max
-                    is None
-                    or bearing_vibration.horizontal_vibration_stats.alarm_min
-                    is None
+                (
+                    bearing_vibration.vertical_vibration is None
+                    or bearing_vibration.vertical_vibration_stats.alarm_max is None
+                    or bearing_vibration.vertical_vibration_stats.alarm_min is None
+                    or bearing_vibration.axial_vibration_stats.alarm_max is None
+                    or bearing_vibration.axial_vibration_stats.alarm_min is None
+                    or bearing_vibration.horizontal_vibration_stats.alarm_max is None
+                    or bearing_vibration.horizontal_vibration_stats.alarm_min is None
                     or bearing_vibration.vertical_vibration
                     >= bearing_vibration.vertical_vibration_stats.alarm_max
                     or bearing_vibration.vertical_vibration
@@ -112,9 +99,16 @@ def create_response(data: dict):
                     >= bearing_vibration.horizontal_vibration_stats.alarm_max
                     or bearing_vibration.horizontal_vibration
                     <= bearing_vibration.horizontal_vibration_stats.alarm_min
-            ) if bearing_vibration is not None else None
+                )
+                if bearing_vibration is not None
+                else None
+            )
 
-            vibration_status = "alarm" if is_vibration_alarm else ("warning" if is_vibration_warning else "default")
+            vibration_status = (
+                "alarm"
+                if is_vibration_alarm
+                else ("warning" if is_vibration_warning else "default")
+            )
 
             new_bearing = BearingResponse(
                 index=bearing.index,
@@ -123,7 +117,7 @@ def create_response(data: dict):
                 is_vibration_warning=is_vibration_warning,
                 is_vibration_alarm=is_vibration_alarm,
                 vibration_status=vibration_status,
-                temp_status=temp_status
+                temp_status=temp_status,
             )
             current_bearings.append(new_bearing)
 
@@ -144,7 +138,7 @@ def create_response(data: dict):
         )
 
     machines = [
-        SinterMachine(exhausters=exhausters[i: i + 2])
+        SinterMachine(exhausters=exhausters[i : i + 2])
         for i in range(0, len(exhausters), 2)
     ]
 

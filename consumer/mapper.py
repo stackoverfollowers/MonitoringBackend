@@ -200,7 +200,7 @@ class ExMapper:
         exhausters_parsed = [
             ExhausterInfo(
                 exhauster_name=exhauster.exhauster_name,
-                rotor_index=exhauster.rotor_index
+                rotor_index=exhauster.rotor_index,
             )
             for exhauster in exhauster_infos
         ]
