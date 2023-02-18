@@ -6,7 +6,7 @@ class KafkaConfig:
     SASL_MECHANISM = "SCRAM-SHA-512"
     SASL_PLAIN_USERNAME = "9433_reader"
     SASL_PLAIN_PASSWORD = "eUIpgWu0PWTJaTrjhjQD3.hoyhntiK"
-    BOOTSTRAP_SERVERS = "rc1a-2ar1hqnl386tvq7k.mdb.yandexcloud.net:9091"
+    BOOTSTRAP_SERVERS = "rc1a-b5e65f36lm3an1d5.mdb.yandexcloud.net:9091"
     GROUP_ID = "stackoverfollowers"
 
 

@@ -5,6 +5,7 @@ from typing import Union
 
 from fastapi import APIRouter
 from starlette.websockets import WebSocket
+from websockets.exceptions import ConnectionClosedOK
 
 from consumer.data_consumer import last_data
 from consumer.mapper import ExMapper
