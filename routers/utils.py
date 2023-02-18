@@ -4,7 +4,7 @@ from models.exhauster_info import BearingExhausterResponse, ExhausterInfoRespons
 from models.structs import ExhaustersData
 
 
-def parse_exhauster_data(mapped_data: ExMapper, index: int):
+def parse_exhauster_data(mapped_data: ExMapper, index: int) -> BaseError | ExhausterInfoResponse:
     bearings_data_all = mapped_data.map_bearings()
 
     if index < 0 or len(bearings_data_all) <= index:
