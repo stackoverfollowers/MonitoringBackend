@@ -14,7 +14,7 @@ from consumer.structs import (
 @dataclass
 class BearingGraphData:
     temp: float
-    index: int = 1
+    index: int
     axial_vibration: float | None = None
     horizontal_vibration: float | None = None
     vertical_vibration: float | None = None
@@ -24,9 +24,11 @@ class BearingGraphData:
         temp = bearing_data.temps.temp
         if bearing_data.vibration is None:
             return cls(
+                index=bearing_data.index,
                 temp=temp
             )
         return cls(
+            index=bearing_data.index,
             temp=temp,
             axial_vibration=bearing_data.vibration.axial_vibration,
             horizontal_vibration=bearing_data.vibration.horizontal_vibration,
