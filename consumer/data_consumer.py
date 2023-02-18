@@ -46,6 +46,9 @@ async def consume_forever():
                 last_data.data = msg_dict["value"]
                 last_data.timestamp = time.time()
                 # todo: считаем алармы на беке
+                # todo: уведомления
+                # todo: данные по датаам
+                # todo: docker
                 await mongodb.write_in_base(data=msg_dict)
         except Exception as e:
             logging.error(traceback.format_exc())
