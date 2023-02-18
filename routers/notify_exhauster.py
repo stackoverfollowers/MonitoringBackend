@@ -64,7 +64,7 @@ def create_response(data: dict, index: int) -> Union[ExhausterInfoResponse, Base
     )
 
 
-@router.websocket("/ws/notify_exhauster/{index}")
+@router.websocket("/notify_exhauster/{index}")
 async def notify_general_ws(websocket: WebSocket, index: int):
     await websocket.accept()
     old_timestamp = 0

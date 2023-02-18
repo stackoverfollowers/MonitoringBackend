@@ -186,7 +186,7 @@ def create_response(data: dict):
     return GeneralPageResponse(sinter_machines=[machine for machine in machines])
 
 
-@router.websocket("/ws/notify_general")
+@router.websocket("/notify_general")
 async def notify_general_ws(websocket: WebSocket):
     old_timestamp = 0
     await websocket.accept()
