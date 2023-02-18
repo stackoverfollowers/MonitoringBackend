@@ -45,8 +45,6 @@ async def consume_forever():
                 msg_dict["value"] = json.loads(msg_dict["value"].decode("utf-8"))
                 last_data.data = msg_dict["value"]
                 last_data.timestamp = time.time()
-                # todo: считаем алармы на беке
-                # todo: уведомления
                 # todo: данные по датаам
                 # todo: docker
                 await mongodb.write_in_base(data=msg_dict)
