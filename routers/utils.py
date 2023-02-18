@@ -176,6 +176,6 @@ def parse_exhauster_data(
             indexed_exhauster.gas_manifold_data.temperature_before, 2
         ),
         gas_underpressure_before=round(
-            indexed_exhauster.gas_manifold_data.underpressure_before, 2
+            indexed_exhauster.gas_manifold_data.underpressure_before, 1
         ),
     )

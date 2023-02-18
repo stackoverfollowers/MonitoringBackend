@@ -3,18 +3,23 @@ from datetime import datetime
 from fastapi import APIRouter
 
 from db.db import mongodb
-from models.structs import ExhaustersData, SingleExhausterData
+from models.errors import Error, BaseError
+from models.structs import ExhaustersData, GraphData
 
 router = APIRouter()
 
 
-@router.get("/by_date", response_model=list[SingleExhausterData])
+@router.get("/by_date", response_model=list[GraphData] | BaseError)
 async def graphs_data_by_date(
     date_from: datetime, date_to: datetime, exhauster_index: int
 ):
+    if exhauster_index < 0 or exhauster_index > 5:
+        return BaseError(error=Error(status=1, desc="bad index"))
+
     mapped_data_list = await mongodb.get_data_by_date(
         date_from=date_from, date_to=date_to
     )
+
     parsed_data = []
     for data in mapped_data_list:
         exhausters_data = ExhaustersData(
@@ -27,6 +32,6 @@ async def graphs_data_by_date(
         )
         indexed_exhauster = exhausters_data.get_single_exhauster_data(
             index=exhauster_index
-        )
+        ).get_graphs_data()
         parsed_data.append(indexed_exhauster)
     return parsed_data
