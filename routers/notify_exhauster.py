@@ -1,25 +1,25 @@
+import asyncio
+import datetime
+import json
 from typing import Union
 
 from fastapi import APIRouter
+from starlette.websockets import WebSocket
 
+from consumer.data_consumer import last_data
 from consumer.mapper import ExMapper
-from db.db import mongodb
-from models.errors import BaseError
+from models.errors import BaseError, Error
 from models.exhauster_info import ExhausterInfoResponse, BearingExhausterResponse
 
 router = APIRouter()
 
 
-@router.get(
-    "/exhauster/{index}", response_model=Union[ExhausterInfoResponse, BaseError]
-)
-async def get_exhauster(index: int):
-    last_data = await mongodb.get_last_data()
-    mapped_data = ExMapper(last_data["value"])
+def create_response(data: dict, index: int) -> Union[ExhausterInfoResponse, BaseError]:
+    mapped_data = ExMapper(data)
     bearings_data_all = mapped_data.map_bearings()
 
     if len(bearings_data_all) <= index or index < 0:
-        return {"error": {"status": 1, "desc": "bad index"}}
+        return BaseError(error=Error(status=1, desc="bad index"))
 
     bearings_data = bearings_data_all[index]
     oil_data = mapped_data.map_oil_systems()[index]
@@ -62,3 +62,21 @@ async def get_exhauster(index: int):
         gas_temp_before=gas_manifold_data.temperature_before,
         gas_underpressure_before=gas_manifold_data.underpressure_before,
     )
+
+
+@router.websocket("/notify_exhauster/{index}")
+async def notify_general_ws(websocket: WebSocket, index: int):
+    await websocket.accept()
+    old_timestamp = 0
+    while True:
+        await asyncio.sleep(0.33)
+        if last_data.timestamp == old_timestamp:
+            continue
+
+        await websocket.send_text(
+            json.dumps(
+                create_response(last_data.data, index).dict(), ensure_ascii=False,
+                default=lambda x: str(x) if not isinstance(x, datetime.datetime) else x.timestamp()
+            )
+        )
+        old_timestamp = last_data.timestamp

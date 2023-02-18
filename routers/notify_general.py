@@ -1,23 +1,24 @@
+import asyncio
 import datetime
+import json
 
 from fastapi import APIRouter
+from starlette.websockets import WebSocket
 
+from consumer.data_consumer import last_data
 from consumer.mapper import ExMapper
-from db.db import mongodb
 from models.general import (
-    GeneralPageResponse,
-    SinterMachine,
-    Exhauster,
     BearingResponse,
+    Exhauster,
+    SinterMachine,
+    GeneralPageResponse,
 )
 
 router = APIRouter()
 
 
-@router.get("/general", response_model=GeneralPageResponse)
-async def general_page():
-    last_data = await mongodb.get_last_data()
-    mapped_data = ExMapper(last_data["value"])
+def create_response(data: dict):
+    mapped_data = ExMapper(data)
 
     exhauster_bearings = mapped_data.map_bearings()
     works_mapped = mapped_data.map_exhauster_works()
@@ -177,10 +178,27 @@ async def general_page():
             )
         )
 
-    print(len(exhausters))
     machines = [
         SinterMachine(exhausters=exhausters[i : i + 2])
         for i in range(0, len(exhausters), 2)
     ]
 
     return GeneralPageResponse(sinter_machines=[machine for machine in machines])
+
+
+@router.websocket("/notify_general")
+async def notify_general_ws(websocket: WebSocket):
+    old_timestamp = 0
+    await websocket.accept()
+    while True:
+        await asyncio.sleep(0.33)
+        if last_data.timestamp == old_timestamp:
+            continue
+
+        await websocket.send_text(
+            json.dumps(
+                create_response(last_data.data).dict(), ensure_ascii=False,
+                default=lambda x: str(x) if not isinstance(x, datetime.datetime) else x.timestamp()
+            )
+        )
+        old_timestamp = last_data.timestamp
