@@ -29,145 +29,109 @@ def create_response(data: dict):
         current_bearings = []
         # TODO)_))!#)(!)(_@*&*Z@^(@#^(#@(78
         for j in range(len(exhauster_bearings[i].bearings)):
+            bearing = exhauster_bearings[i].bearings[j]
+            bearing_temps = bearing.temps
+            is_temp_alarm = (
+                    bearing.temps.temp is None
+                    or bearing.temps.setting_temp.alarm_max
+                    is None
+                    or bearing.temps.setting_temp.alarm_min
+                    is None
+                    or bearing.temps.temp
+                    >= bearing.temps.setting_temp.alarm_max
+                    or bearing.temps.temp
+                    <= bearing.temps.setting_temp.alarm_min
+            )
+            is_temp_warning = (
+                    bearing_temps.temp is None
+                    or bearing_temps.setting_temp.warning_min
+                    is None
+                    or bearing_temps.setting_temp.warning_max
+                    is None
+                    or bearing_temps.temp
+                    >= bearing_temps.setting_temp.warning_max
+                    or bearing_temps.temp
+                    <= bearing_temps.setting_temp.warning_min
+            )
+            temp_status = "alarm" if is_temp_alarm else ("warning" if is_temp_warning else "default")
+            bearing_vibration = bearing.vibration
+
+            is_vibration_warning = (
+                    bearing_vibration.vertical_vibration
+                    is None
+                    or bearing_vibration.vertical_vibration_stats.warning_max
+                    is None
+                    or bearing_vibration.vertical_vibration_stats.warning_min
+                    is None
+                    or bearing_vibration.axial_vibration_stats.warning_max
+                    is None
+                    or bearing_vibration.axial_vibration_stats.warning_min
+                    is None
+                    or bearing_vibration.horizontal_vibration_stats.warning_max
+                    is None
+                    or bearing_vibration.horizontal_vibration_stats.warning_min
+                    is None
+                    or bearing_vibration.vertical_vibration
+                    >= bearing_vibration.vertical_vibration_stats.warning_max
+                    or bearing_vibration.vertical_vibration
+                    <= bearing_vibration.vertical_vibration_stats.warning_min
+                    or bearing_vibration.axial_vibration
+                    >= bearing_vibration.axial_vibration_stats.warning_max
+                    or bearing_vibration.axial_vibration
+                    <= bearing_vibration.axial_vibration_stats.warning_min
+                    or bearing_vibration.horizontal_vibration
+                    >= bearing_vibration.horizontal_vibration_stats.warning_max
+                    or bearing.vibration.horizontal_vibration
+                    <= bearing_vibration.horizontal_vibration_stats.warning_min
+            ) if bearing_vibration is not None else None
+
+            is_vibration_alarm = (
+                    bearing_vibration.vertical_vibration
+                    is None
+                    or bearing_vibration.vertical_vibration_stats.alarm_max
+                    is None
+                    or bearing_vibration.vertical_vibration_stats.alarm_min
+                    is None
+                    or bearing_vibration.axial_vibration_stats.alarm_max
+                    is None
+                    or bearing_vibration.axial_vibration_stats.alarm_min
+                    is None
+                    or bearing_vibration.horizontal_vibration_stats.alarm_max
+                    is None
+                    or bearing_vibration.horizontal_vibration_stats.alarm_min
+                    is None
+                    or bearing_vibration.vertical_vibration
+                    >= bearing_vibration.vertical_vibration_stats.alarm_max
+                    or bearing_vibration.vertical_vibration
+                    <= bearing_vibration.vertical_vibration_stats.alarm_min
+                    or bearing_vibration.axial_vibration
+                    >= bearing_vibration.axial_vibration_stats.alarm_max
+                    or bearing_vibration.axial_vibration
+                    <= bearing_vibration.axial_vibration_stats.alarm_min
+                    or bearing_vibration.horizontal_vibration
+                    >= bearing_vibration.horizontal_vibration_stats.alarm_max
+                    or bearing_vibration.horizontal_vibration
+                    <= bearing_vibration.horizontal_vibration_stats.alarm_min
+            ) if bearing_vibration is not None else None
+
+            vibration_status = "alarm" if is_vibration_alarm else ("warning" if is_vibration_warning else "default")
+
             new_bearing = BearingResponse(
-                index=exhauster_bearings[i].bearings[j].index,
-                is_temp_warning=(
-                    exhauster_bearings[i].bearings[j].temps.temp is None
-                    or exhauster_bearings[i].bearings[j].temps.setting_temp.warning_min
-                    is None
-                    or exhauster_bearings[i].bearings[j].temps.setting_temp.warning_max
-                    is None
-                    or exhauster_bearings[i].bearings[j].temps.temp
-                    >= exhauster_bearings[i].bearings[j].temps.setting_temp.warning_max
-                    or exhauster_bearings[i].bearings[j].temps.temp
-                    <= exhauster_bearings[i].bearings[j].temps.setting_temp.warning_min
-                ),
-                is_temp_alarm=(
-                    exhauster_bearings[i].bearings[j].temps.temp is None
-                    or exhauster_bearings[i].bearings[j].temps.setting_temp.alarm_max
-                    is None
-                    or exhauster_bearings[i].bearings[j].temps.setting_temp.alarm_min
-                    is None
-                    or exhauster_bearings[i].bearings[j].temps.temp
-                    >= exhauster_bearings[i].bearings[j].temps.setting_temp.alarm_max
-                    or exhauster_bearings[i].bearings[j].temps.temp
-                    <= exhauster_bearings[i].bearings[j].temps.setting_temp.alarm_min
-                ),
-                is_vibration_warning=(
-                    exhauster_bearings[i].bearings[j].vibration.vertical_vibration
-                    is None
-                    or exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.vertical_vibration_stats.warning_max
-                    is None
-                    or exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.vertical_vibration_stats.warning_min
-                    is None
-                    or exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.axial_vibration_stats.warning_max
-                    is None
-                    or exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.axial_vibration_stats.warning_min
-                    is None
-                    or exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.horizontal_vibration_stats.warning_max
-                    is None
-                    or exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.horizontal_vibration_stats.warning_min
-                    is None
-                    or exhauster_bearings[i].bearings[j].vibration.vertical_vibration
-                    >= exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.vertical_vibration_stats.warning_max
-                    or exhauster_bearings[i].bearings[j].vibration.vertical_vibration
-                    <= exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.vertical_vibration_stats.warning_min
-                    or exhauster_bearings[i].bearings[j].vibration.axial_vibration
-                    >= exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.axial_vibration_stats.warning_max
-                    or exhauster_bearings[i].bearings[j].vibration.axial_vibration
-                    <= exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.axial_vibration_stats.warning_min
-                    or exhauster_bearings[i].bearings[j].vibration.horizontal_vibration
-                    >= exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.horizontal_vibration_stats.warning_max
-                    or exhauster_bearings[i].bearings[j].vibration.horizontal_vibration
-                    <= exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.horizontal_vibration_stats.warning_min
-                )
-                if exhauster_bearings[i].bearings[j].vibration is not None
-                else None,
-                is_vibration_alarm=(
-                    exhauster_bearings[i].bearings[j].vibration.vertical_vibration
-                    is None
-                    or exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.vertical_vibration_stats.alarm_max
-                    is None
-                    or exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.vertical_vibration_stats.alarm_min
-                    is None
-                    or exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.axial_vibration_stats.alarm_max
-                    is None
-                    or exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.axial_vibration_stats.alarm_min
-                    is None
-                    or exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.horizontal_vibration_stats.alarm_max
-                    is None
-                    or exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.horizontal_vibration_stats.alarm_min
-                    is None
-                    or exhauster_bearings[i].bearings[j].vibration.vertical_vibration
-                    >= exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.vertical_vibration_stats.alarm_max
-                    or exhauster_bearings[i].bearings[j].vibration.vertical_vibration
-                    <= exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.vertical_vibration_stats.alarm_min
-                    or exhauster_bearings[i].bearings[j].vibration.axial_vibration
-                    >= exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.axial_vibration_stats.alarm_max
-                    or exhauster_bearings[i].bearings[j].vibration.axial_vibration
-                    <= exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.axial_vibration_stats.alarm_min
-                    or exhauster_bearings[i].bearings[j].vibration.horizontal_vibration
-                    >= exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.horizontal_vibration_stats.alarm_max
-                    or exhauster_bearings[i].bearings[j].vibration.horizontal_vibration
-                    <= exhauster_bearings[i]
-                    .bearings[j]
-                    .vibration.horizontal_vibration_stats.alarm_min
-                )
-                if exhauster_bearings[i].bearings[j].vibration is not None
-                else None,
+                index=bearing.index,
+                is_temp_warning=is_temp_warning,
+                is_temp_alarm=is_temp_alarm,
+                is_vibration_warning=is_vibration_warning,
+                is_vibration_alarm=is_vibration_alarm,
+                vibration_status=vibration_status,
+                temp_status=temp_status
             )
             current_bearings.append(new_bearing)
+
         exhausters.append(
             Exhauster(
                 title=exhauster_bearings[i].exhauster_name,
                 is_work=works_mapped[i].work,
-                rotor_title="no data?",  # todo
+                rotor_title=exhauster_bearings[i].rotor_index,
                 date_last_change=datetime.datetime.now(),  # todo
                 days_last_change=1,  # todo
                 days_forecast=1,  # todo
@@ -180,7 +144,7 @@ def create_response(data: dict):
         )
 
     machines = [
-        SinterMachine(exhausters=exhausters[i : i + 2])
+        SinterMachine(exhausters=exhausters[i: i + 2])
         for i in range(0, len(exhausters), 2)
     ]
 
