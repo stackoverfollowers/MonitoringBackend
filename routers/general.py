@@ -121,6 +121,7 @@ async def general_page():
 
         exhausters.append(
             Exhauster(
+                index=i,
                 title=exhauster_bearings[i].exhauster_name,
                 is_work=works_mapped[i].work,
                 rotor_title=exhauster_bearings[i].rotor_index,

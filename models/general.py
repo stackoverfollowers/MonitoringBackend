@@ -16,6 +16,7 @@ class BearingResponse(pydantic.BaseModel):
 
 
 class Exhauster(pydantic.BaseModel):
+    index: int
     title: str
     is_work: bool
     rotor_title: str
