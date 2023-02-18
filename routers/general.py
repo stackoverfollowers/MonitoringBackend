@@ -177,7 +177,6 @@ async def general_page():
             )
         )
 
-    print(len(exhausters))
     machines = [
         SinterMachine(exhausters=exhausters[i : i + 2])
         for i in range(0, len(exhausters), 2)

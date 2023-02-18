@@ -197,8 +197,11 @@ async def notify_general_ws(websocket: WebSocket):
 
         await websocket.send_text(
             json.dumps(
-                create_response(last_data.data).dict(), ensure_ascii=False,
-                default=lambda x: str(x) if not isinstance(x, datetime.datetime) else x.timestamp()
+                create_response(last_data.data).dict(),
+                ensure_ascii=False,
+                default=lambda x: str(x)
+                if not isinstance(x, datetime.datetime)
+                else x.timestamp(),
             )
         )
         old_timestamp = last_data.timestamp

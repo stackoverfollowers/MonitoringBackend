@@ -330,8 +330,6 @@ class ExMapper:
                             "axial_vibrations_warning_mins", second_key, exhauster
                         )
                     ].vibration.axial_vibration_stats.warning_min = value
-        for b in exhausters_parsed[0].bearings:
-            print(b)
         return exhausters_parsed
 
     def map_chillers(self) -> list[Chiller]:
