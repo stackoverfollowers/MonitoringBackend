@@ -4,6 +4,7 @@ import motor.motor_asyncio
 from bson import ObjectId
 
 from config import MongoConfig
+from consumer.mapper import ExMapper
 
 
 class MongoDB:
@@ -25,10 +26,12 @@ class MongoDB:
     async def get_data_by_date(self, date_from: datetime, date_to: datetime):
         date_from = date_from.isoformat()
         date_to = date_to.isoformat()
-
+        mapped_items = []
         async for item in self.collection.find({"value.moment": {"$lte": date_to, "$gte": date_from}}):
-            print(item["offset"])
-        return
+            mapped_items.append(ExMapper(
+                exhauster_data=item["value"]
+            ))
+        return mapped_items
 
 
 mongodb = MongoDB()
