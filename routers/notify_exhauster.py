@@ -73,16 +73,14 @@ async def notify_general_ws(websocket: WebSocket, index: int):
         await asyncio.sleep(0.33)
         if last_data.timestamp == old_timestamp:
             continue
-        try:
-            await websocket.send_text(
-                json.dumps(
-                    create_response(last_data.data, index).dict(),
-                    ensure_ascii=False,
-                    default=lambda x: str(x)
-                    if not isinstance(x, datetime.datetime)
-                    else x.timestamp(),
-                )
+
+        await websocket.send_text(
+            json.dumps(
+                create_response(last_data.data, index).dict(),
+                ensure_ascii=False,
+                default=lambda x: str(x)
+                if not isinstance(x, datetime.datetime)
+                else x.timestamp(),
             )
-        except ConnectionClosedOK:
-            continue
+        )
         old_timestamp = last_data.timestamp
