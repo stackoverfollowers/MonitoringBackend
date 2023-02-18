@@ -13,7 +13,6 @@ from consumer.structs import (
 
 @dataclass
 class BearingGraphData:
-    index: int = 1
     temp: float
     index: int = 1
     axial_vibration: float | None = None
