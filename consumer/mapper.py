@@ -50,7 +50,7 @@ class ExMapper:
                 exhauster_pre_index=2,
                 temperatures=[27, 28, 29, 30, 31, 32, 33, 34, 35],
                 alarm_maxes=list(range(65, 73 + 1)),
-                alarm_mins=list(range(108, 116 + 1)),
+                alarm_mins=list(range(74, 82 + 1)),
                 warning_maxes=list(range(83, 91 + 1)),
                 warning_mins=list(range(92, 100 + 1)),
                 axial_vibrations=list(range(2, 11 + 1, 3)),
@@ -330,7 +330,8 @@ class ExMapper:
                             "axial_vibrations_warning_mins", second_key, exhauster
                         )
                     ].vibration.axial_vibration_stats.warning_min = value
-
+        for b in exhausters_parsed[0].bearings:
+            print(b)
         return exhausters_parsed
 
     def map_chillers(self) -> list[Chiller]:
