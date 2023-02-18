@@ -1,6 +1,13 @@
 from dataclasses import dataclass
 
-from consumer.structs import OilSystem, ExhausterInfo, MainGearing, Chiller, ValvePosition, GasManifold
+from consumer.structs import (
+    OilSystem,
+    ExhausterInfo,
+    MainGearing,
+    Chiller,
+    ValvePosition,
+    GasManifold,
+)
 
 
 @dataclass

@@ -31,10 +31,10 @@ class ExhausterInfoResponse(pydantic.BaseModel):
 
     rotor_current: float
     rotor_current_status: str
-    stator_current: float
+    stator_current: int
     stator_current_status: str
-    rotor_voltage: float
-    stator_voltage: float
+    rotor_voltage: int
+    stator_voltage: int
 
     oil_temp_before: float
     oil_temp_before_status: str

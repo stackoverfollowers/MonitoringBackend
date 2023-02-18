@@ -9,8 +9,12 @@ router = APIRouter()
 
 
 @router.get("/by_date", response_model=list[SingleExhausterData])
-async def graphs_data_by_date(date_from: datetime, date_to: datetime, exhauster_index: int):
-    mapped_data_list = await mongodb.get_data_by_date(date_from=date_from, date_to=date_to)
+async def graphs_data_by_date(
+    date_from: datetime, date_to: datetime, exhauster_index: int
+):
+    mapped_data_list = await mongodb.get_data_by_date(
+        date_from=date_from, date_to=date_to
+    )
     parsed_data = []
     for data in mapped_data_list:
         exhausters_data = ExhaustersData(
@@ -21,6 +25,8 @@ async def graphs_data_by_date(date_from: datetime, date_to: datetime, exhauster_
             gas_valve_data=data.map_valves(),
             gas_manifold_data=data.map_gas_manifolds(),
         )
-        indexed_exhauster = exhausters_data.get_single_exhauster_data(index=exhauster_index)
+        indexed_exhauster = exhausters_data.get_single_exhauster_data(
+            index=exhauster_index
+        )
         parsed_data.append(indexed_exhauster)
     return parsed_data

@@ -27,10 +27,10 @@ class MongoDB:
         date_from = date_from.isoformat()
         date_to = date_to.isoformat()
         mapped_items = []
-        async for item in self.collection.find({"value.moment": {"$lte": date_to, "$gte": date_from}}):
-            mapped_items.append(ExMapper(
-                exhauster_data=item["value"]
-            ))
+        async for item in self.collection.find(
+            {"value.moment": {"$lte": date_to, "$gte": date_from}}
+        ):
+            mapped_items.append(ExMapper(exhauster_data=item["value"]))
         return mapped_items
 
 
