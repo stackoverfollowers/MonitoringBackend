@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import motor.motor_asyncio
 from bson import ObjectId
 
@@ -19,6 +21,14 @@ class MongoDB:
         cursor = self.collection.find()
         async for item in cursor.sort("timestamp", -1).limit(1):
             return item
+
+    async def get_data_by_date(self, date_from: datetime, date_to: datetime):
+        date_from = date_from.isoformat()
+        date_to = date_to.isoformat()
+
+        async for item in self.collection.find({"value.moment": {"$lte": date_to, "$gte": date_from}}):
+            print(item["offset"])
+        return
 
 
 mongodb = MongoDB()

@@ -6,6 +6,7 @@ from .notify_exhauster import router as notify_exhauster_router
 from .notify_events import router as notify_events_router
 from .general import router as general_router
 from .exhauster import router as exhauster_router
+from .graphs_data import router as graphs_router
 
 api_router = APIRouter()
 api_router.include_router(alive_router)
@@ -13,4 +14,5 @@ api_router.include_router(notify_general_router)
 api_router.include_router(notify_exhauster_router)
 api_router.include_router(general_router)
 api_router.include_router(exhauster_router)
+api_router.include_router(graphs_router)
 api_router.include_router(notify_events_router)

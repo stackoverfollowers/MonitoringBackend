@@ -131,6 +131,9 @@ def create_exhauster_info(
     )
 
     return ExhausterInfoResponse(
+        title=bearings_data.exhauster_name,
+        rotor_title=bearings_data.rotor_index,
+        is_work=mapped_data.map_exhauster_works()[index].work,
         bearings=bearings,
         oil_level=oil_data.oil_level,
         oil_level_status=oil_level_status,

@@ -21,7 +21,7 @@ app.add_middleware(
 @app.on_event("startup")
 async def startup_init():
     current_loop = asyncio.get_running_loop()
-    current_loop.create_task(consume_forever())
+    # current_loop.create_task(consume_forever())
 
 
 app.include_router(api_router)

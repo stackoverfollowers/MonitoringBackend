@@ -17,6 +17,10 @@ class BearingExhausterResponse(pydantic.BaseModel):
 
 
 class ExhausterInfoResponse(pydantic.BaseModel):
+    title: str
+    is_work: bool
+    rotor_title: str
+
     bearings: list[BearingExhausterResponse]
 
     oil_level: float
