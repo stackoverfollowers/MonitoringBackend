@@ -7,6 +7,7 @@ import pydantic
 class BearingExhausterResponse(pydantic.BaseModel):
     index: int
     temperature: float
+    temp_status: str
     axial_vibration: Optional[float] = None
     horizontal_vibration: Optional[float] = None
     vertical_vibration: Optional[float] = None

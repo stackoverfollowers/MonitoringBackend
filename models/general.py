@@ -11,6 +11,8 @@ class BearingResponse(pydantic.BaseModel):
 
     is_vibration_warning: Optional[bool] = None
     is_vibration_alarm: Optional[bool] = None
+    vibration_status: str
+    temp_status: str
 
 
 class Exhauster(pydantic.BaseModel):

@@ -18,7 +18,7 @@ async def get_exhauster(index: int):
     mapped_data = ExMapper(last_data["value"])
     bearings_data_all = mapped_data.map_bearings()
 
-    if len(bearings_data_all) <= index or index < 0:
+    if index < 0 or len(bearings_data_all) <= index:
         return {"error": {"status": 1, "desc": "bad index"}}
 
     bearings_data = bearings_data_all[index]
@@ -32,6 +32,8 @@ async def get_exhauster(index: int):
         BearingExhausterResponse(
             index=bearing.index,
             temperature=bearing.temps.temp,
+            # temp_status=("warning" if 75 < bearing.temps.temp >= 65 else ),
+            temp_status="xyu",
             axial_vibration=bearing.vibration.axial_vibration
             if bearing.vibration is not None
             else None,

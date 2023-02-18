@@ -47,6 +47,7 @@ class ExMapper:
         exhauster_infos = [
             ExhausterPreMapInfo(
                 exhauster_name="У-171",
+                rotor_index=22,
                 exhauster_pre_index=2,
                 temperatures=[27, 28, 29, 30, 31, 32, 33, 34, 35],
                 alarm_maxes=list(range(65, 73 + 1)),
@@ -71,6 +72,7 @@ class ExMapper:
             ),
             ExhausterPreMapInfo(
                 exhauster_name="У-172",
+                rotor_index=29,
                 exhauster_pre_index=2,
                 temperatures=[43, 44, 45, 47, 48, 49, 50, 51, 52],
                 alarm_maxes=list(range(101, 109 + 1)),
@@ -95,6 +97,7 @@ class ExMapper:
             ),
             ExhausterPreMapInfo(
                 exhauster_name="Ф-171",
+                rotor_index=37,
                 exhauster_pre_index=0,
                 temperatures=[27, 28, 29, 30, 31, 32, 33, 34, 35],
                 alarm_maxes=list(range(63, 71 + 1)),
@@ -119,6 +122,7 @@ class ExMapper:
             ),
             ExhausterPreMapInfo(
                 exhauster_name="Ф-172",
+                rotor_index=27,
                 exhauster_pre_index=0,
                 temperatures=[43, 44, 45, 47, 48, 49, 50, 51, 52],
                 alarm_maxes=list(range(99, 107 + 1)),
@@ -143,6 +147,7 @@ class ExMapper:
             ),
             ExhausterPreMapInfo(
                 exhauster_name="Х-171",
+                rotor_index=39,
                 exhauster_pre_index=3,
                 temperatures=[27, 28, 29, 30, 31, 32, 33, 34, 35],
                 alarm_maxes=list(range(63, 71 + 1)),
@@ -167,6 +172,7 @@ class ExMapper:
             ),
             ExhausterPreMapInfo(
                 exhauster_name="Х-172",
+                rotor_index=45,
                 exhauster_pre_index=3,
                 temperatures=[43, 44, 45, 47, 48, 49, 50, 51, 52],
                 alarm_maxes=list(range(99, 107 + 1)),
@@ -192,7 +198,10 @@ class ExMapper:
         ]
 
         exhausters_parsed = [
-            ExhausterInfo(exhauster_name=exhauster.exhauster_name)
+            ExhausterInfo(
+                exhauster_name=exhauster.exhauster_name,
+                rotor_index=exhauster.rotor_index
+            )
             for exhauster in exhauster_infos
         ]
         # сначала созадем просто все подшипники потом туда суем дату
@@ -556,4 +565,6 @@ if __name__ == "__main__":
     with open("data.json", "r", encoding="utf-8") as file:
         data = json.load(file)
     mapper = ExMapper(exhauster_data=data)
-    mapper.map_bearings()
+    exhausters = mapper.map_bearings()
+    for b in exhausters[0].bearings:
+        print(b)

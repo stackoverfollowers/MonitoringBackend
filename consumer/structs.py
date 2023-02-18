@@ -79,6 +79,7 @@ class ExhausterWork:
 @dataclass
 class ExhausterPreMapInfo:
     exhauster_name: str
+    rotor_index: int
     exhauster_pre_index: int
 
     temperatures: list
@@ -110,4 +111,5 @@ class ExhausterPreMapInfo:
 @dataclass
 class ExhausterInfo:
     exhauster_name: str
+    rotor_index: int
     bearings: list[Bearing] = field(default_factory=list)
