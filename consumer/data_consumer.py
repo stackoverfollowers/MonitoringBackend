@@ -21,6 +21,8 @@ last_data = LastData()
 
 
 async def consume_forever():
+    last_data.data = (await mongodb.get_last_data())["value"]
+    last_data.timestamp = time.time()
     consumer = AIOKafkaConsumer(
         KafkaConfig.TOPIC,
         client_id=KafkaConfig.CLIENT_ID,
@@ -33,8 +35,6 @@ async def consume_forever():
         group_id=KafkaConfig.GROUP_ID,
         request_timeout_ms=1000,
     )
-    last_data.data = (await mongodb.get_last_data())["value"]
-    last_data.timestamp = time.time()
 
     await consumer.start()
     while True:
